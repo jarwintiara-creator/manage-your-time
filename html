@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Your Time - Aplikasi To-Do List Asrama</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HALAMAN AUTENTIKASI (LOGIN & REGISTER) -->
+    <div id="auth-container" class="container auth-box">
+        <div class="header-logo">
+            <h1>Manage Your <span>Time</span></h1>
+            <p>Manajemen Kegiatan & Kedisiplinan Asrama</p>
+        </div>
+
+        <!-- Tab Navigasi -->
+        <div class="auth-tabs">
+            <button id="tab-login" class="active" onclick="switchAuthTab('login')">Masuk</button>
+            <button id="tab-register" onclick="switchAuthTab('register')">Daftar Akun</button>
+        </div>
+
+        <!-- Form Login -->
+        <form id="login-form" class="auth-form">
+            <div class="input-group">
+                <label for="login-username">Username / Nama Panggilan</label>
+                <input type="text" id="login-username" placeholder="Masukkan username Anda" required>
+            </div>
+            <div class="input-group">
+                <label for="login-password">Kata Sandi</label>
+                <input type="password" id="login-password" placeholder="Masukkan kata sandi" required>
+            </div>
+            <button type="submit" class="btn-primary">Masuk ke Manage Your Time</button>
+        </form>
+
+        <!-- Form Register -->
+        <form id="register-form" class="auth-form hidden">
+            <div class="input-group">
+                <label for="reg-fullname">Nama Lengkap Penghuni</label>
+                <input type="text" id="reg-fullname" placeholder="Contoh: Budi Santoso" required>
+            </div>
+            <div class="input-group">
+                <label for="reg-room">Nomor Kamar / Gedung</label>
+                <input type="text" id="reg-room" placeholder="Contoh: Kamar B-12" required>
+            </div>
+            <div class="input-group">
+                <label for="reg-username">Username Akun</label>
+                <input type="text" id="reg-username" placeholder="Buat username unik" required>
+            </div>
+            <div class="input-group">
+                <label for="reg-password">Kata Sandi</label>
+                <input type="password" id="reg-password" placeholder="Buat kata sandi" required>
+            </div>
+            <button type="submit" class="btn-primary">Buat Akun Baru</button>
+        </form>
+        <p id="auth-message" class="message"></p>
+    </div>
+
+    <!-- HALAMAN DASHBOARD UTAMA -->
+    <div id="dashboard-container" class="container dashboard-box hidden">
+        <header class="dash-header">
+            <div>
+                <h2 id="welcome-text">Halo, Penghuni!</h2>
+                <span id="room-badge" class="badge">Kamar -</span>
+            </div>
+            <div class="header-actions">
+                <button id="btn-notif-perm" onclick="requestNotificationPermission()" class="btn-notif">Aktifkan Notif</button>
+                <button onclick="logout()" class="btn-logout">Keluar</button>
+            </div>
+        </header>
+
+        <!-- Area Notifikasi Tenggat Waktu di Dalam Aplikasi -->
+        <div id="notif-alert-box" class="notif-alert-box hidden"></div>
+
+        <!-- Statistik Singkat -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-num" id="stat-total">0</span>
+                <span class="stat-label">Total Kegiatan</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="stat-pending">0</span>
+                <span class="stat-label">Belum Selesai</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="stat-done">0</span>
+                <span class="stat-label">Selesai</span>
+            </div>
+        </div>
+
+        <!-- Form Tambah Tugas -->
+        <form id="todo-form" class="todo-input-section">
+            <h3>Tambah Kegiatan / Tugas Baru</h3>
+            <div class="form-row">
+                <input type="text" id="task-title" placeholder="Contoh: Piket menyapu selasar, Setoran hafalan..." required>
+                <select id="task-category">
+                    <option value="Piket & Kebersihan">Piket & Kebersihan</option>
+                    <option value="Belajar & Ujian">Belajar & Ujian</option>
+                    <option value="Ibadah & Kegiatan">Ibadah & Kegiatan</option>
+                    <option value="Pribadi">Pribadi</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="deadline-wrapper">
+                    <label for="task-deadline">Tenggat Waktu:</label>
+                    <input type="datetime-local" id="task-deadline" required>
+                </div>
+                <button type="submit" class="btn-add">+ Tambah Daftar</button>
+            </div>
+        </form>
+
+        <!-- Filter Daftar Tugas -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTasks('all', this)">Semua</button>
+            <button class="filter-btn" onclick="filterTasks('pending', this)">Belum Selesai</button>
+            <button class="filter-btn" onclick="filterTasks('completed', this)">Sudah Selesai</button>
+        </div>
+
+        <!-- Daftar Kegiatan -->
+        <ul id="task-list" class="task-list">
+            <!-- Item tugas akan dirender di sini oleh JavaScript -->
+        </ul>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
